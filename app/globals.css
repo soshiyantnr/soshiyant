@@ -1,0 +1,344 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* =================================
+   Persian Blog Multi-Theme System
+   Inspired by Persian Art & Literature
+   ================================= */
+
+/* Theme 1: فیروزه‌ای کلاسیک (Classic Turquoise) - Default */
+:root,
+[data-theme="firouzei"] {
+  --background: oklch(0.975 0.008 180);
+  --foreground: oklch(0.18 0.025 180);
+  --card: oklch(0.99 0.006 180);
+  --card-foreground: oklch(0.18 0.025 180);
+  --popover: oklch(0.99 0.006 180);
+  --popover-foreground: oklch(0.18 0.025 180);
+  --primary: oklch(0.50 0.12 180);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.94 0.015 180);
+  --secondary-foreground: oklch(0.18 0.025 180);
+  --muted: oklch(0.92 0.012 180);
+  --muted-foreground: oklch(0.42 0.025 180);
+  --accent: oklch(0.72 0.14 85);
+  --accent-foreground: oklch(0.18 0.025 180);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.88 0.015 180);
+  --input: oklch(0.88 0.015 180);
+  --ring: oklch(0.50 0.12 180);
+  --radius: 0.625rem;
+  --pattern-opacity: 0.03;
+}
+
+[data-theme="firouzei"].dark,
+.dark[data-theme="firouzei"],
+.dark:not([data-theme]) {
+  --background: oklch(0.14 0.025 180);
+  --foreground: oklch(0.94 0.008 180);
+  --card: oklch(0.18 0.025 180);
+  --card-foreground: oklch(0.94 0.008 180);
+  --popover: oklch(0.18 0.025 180);
+  --popover-foreground: oklch(0.94 0.008 180);
+  --primary: oklch(0.62 0.12 180);
+  --primary-foreground: oklch(0.14 0.025 180);
+  --secondary: oklch(0.22 0.025 180);
+  --secondary-foreground: oklch(0.94 0.008 180);
+  --muted: oklch(0.22 0.025 180);
+  --muted-foreground: oklch(0.62 0.025 180);
+  --accent: oklch(0.75 0.14 85);
+  --accent-foreground: oklch(0.14 0.025 180);
+  --border: oklch(0.28 0.025 180);
+  --input: oklch(0.28 0.025 180);
+  --ring: oklch(0.62 0.12 180);
+  --pattern-opacity: 0.05;
+}
+
+/* Theme 2: سرخ ادبی (Literary Red) */
+[data-theme="sorkh"] {
+  --background: oklch(0.975 0.008 30);
+  --foreground: oklch(0.18 0.03 25);
+  --card: oklch(0.99 0.006 30);
+  --card-foreground: oklch(0.18 0.03 25);
+  --popover: oklch(0.99 0.006 30);
+  --popover-foreground: oklch(0.18 0.03 25);
+  --primary: oklch(0.48 0.18 25);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.94 0.015 30);
+  --secondary-foreground: oklch(0.18 0.03 25);
+  --muted: oklch(0.92 0.012 30);
+  --muted-foreground: oklch(0.42 0.03 25);
+  --accent: oklch(0.72 0.14 85);
+  --accent-foreground: oklch(0.18 0.03 25);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.88 0.015 30);
+  --input: oklch(0.88 0.015 30);
+  --ring: oklch(0.48 0.18 25);
+  --pattern-opacity: 0.03;
+}
+
+[data-theme="sorkh"].dark,
+.dark[data-theme="sorkh"] {
+  --background: oklch(0.14 0.03 25);
+  --foreground: oklch(0.94 0.008 30);
+  --card: oklch(0.18 0.03 25);
+  --card-foreground: oklch(0.94 0.008 30);
+  --popover: oklch(0.18 0.03 25);
+  --popover-foreground: oklch(0.94 0.008 30);
+  --primary: oklch(0.58 0.18 25);
+  --primary-foreground: oklch(0.14 0.03 25);
+  --secondary: oklch(0.22 0.03 25);
+  --secondary-foreground: oklch(0.94 0.008 30);
+  --muted: oklch(0.22 0.03 25);
+  --muted-foreground: oklch(0.62 0.03 25);
+  --accent: oklch(0.75 0.14 85);
+  --accent-foreground: oklch(0.14 0.03 25);
+  --border: oklch(0.28 0.03 25);
+  --input: oklch(0.28 0.03 25);
+  --ring: oklch(0.58 0.18 25);
+  --pattern-opacity: 0.05;
+}
+
+/* Theme 3: طلایی مینیمال (Minimal Gold) */
+[data-theme="talaei"] {
+  --background: oklch(0.98 0.012 85);
+  --foreground: oklch(0.20 0.03 85);
+  --card: oklch(0.995 0.008 85);
+  --card-foreground: oklch(0.20 0.03 85);
+  --popover: oklch(0.995 0.008 85);
+  --popover-foreground: oklch(0.20 0.03 85);
+  --primary: oklch(0.68 0.15 85);
+  --primary-foreground: oklch(0.20 0.03 85);
+  --secondary: oklch(0.95 0.02 85);
+  --secondary-foreground: oklch(0.20 0.03 85);
+  --muted: oklch(0.93 0.015 85);
+  --muted-foreground: oklch(0.45 0.03 85);
+  --accent: oklch(0.50 0.12 180);
+  --accent-foreground: oklch(0.99 0 0);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.90 0.02 85);
+  --input: oklch(0.90 0.02 85);
+  --ring: oklch(0.68 0.15 85);
+  --pattern-opacity: 0.025;
+}
+
+[data-theme="talaei"].dark,
+.dark[data-theme="talaei"] {
+  --background: oklch(0.15 0.025 85);
+  --foreground: oklch(0.94 0.012 85);
+  --card: oklch(0.19 0.025 85);
+  --card-foreground: oklch(0.94 0.012 85);
+  --popover: oklch(0.19 0.025 85);
+  --popover-foreground: oklch(0.94 0.012 85);
+  --primary: oklch(0.75 0.15 85);
+  --primary-foreground: oklch(0.15 0.025 85);
+  --secondary: oklch(0.23 0.025 85);
+  --secondary-foreground: oklch(0.94 0.012 85);
+  --muted: oklch(0.23 0.025 85);
+  --muted-foreground: oklch(0.65 0.025 85);
+  --accent: oklch(0.58 0.12 180);
+  --accent-foreground: oklch(0.15 0.025 85);
+  --border: oklch(0.30 0.025 85);
+  --input: oklch(0.30 0.025 85);
+  --ring: oklch(0.75 0.15 85);
+  --pattern-opacity: 0.04;
+}
+
+/* Theme 4: نیلی عرفانی (Mystical Indigo) */
+[data-theme="nili"] {
+  --background: oklch(0.975 0.012 280);
+  --foreground: oklch(0.18 0.04 280);
+  --card: oklch(0.99 0.008 280);
+  --card-foreground: oklch(0.18 0.04 280);
+  --popover: oklch(0.99 0.008 280);
+  --popover-foreground: oklch(0.18 0.04 280);
+  --primary: oklch(0.50 0.16 280);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.94 0.02 280);
+  --secondary-foreground: oklch(0.18 0.04 280);
+  --muted: oklch(0.92 0.015 280);
+  --muted-foreground: oklch(0.45 0.04 280);
+  --accent: oklch(0.72 0.14 85);
+  --accent-foreground: oklch(0.18 0.04 280);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.88 0.02 280);
+  --input: oklch(0.88 0.02 280);
+  --ring: oklch(0.50 0.16 280);
+  --pattern-opacity: 0.03;
+}
+
+[data-theme="nili"].dark,
+.dark[data-theme="nili"] {
+  --background: oklch(0.13 0.04 280);
+  --foreground: oklch(0.94 0.012 280);
+  --card: oklch(0.17 0.04 280);
+  --card-foreground: oklch(0.94 0.012 280);
+  --popover: oklch(0.17 0.04 280);
+  --popover-foreground: oklch(0.94 0.012 280);
+  --primary: oklch(0.62 0.16 280);
+  --primary-foreground: oklch(0.13 0.04 280);
+  --secondary: oklch(0.21 0.04 280);
+  --secondary-foreground: oklch(0.94 0.012 280);
+  --muted: oklch(0.21 0.04 280);
+  --muted-foreground: oklch(0.62 0.04 280);
+  --accent: oklch(0.75 0.14 85);
+  --accent-foreground: oklch(0.13 0.04 280);
+  --border: oklch(0.27 0.04 280);
+  --input: oklch(0.27 0.04 280);
+  --ring: oklch(0.62 0.16 280);
+  --pattern-opacity: 0.05;
+}
+
+/* Theme 5: خاکی سنتی (Traditional Earthy) */
+[data-theme="khaki"] {
+  --background: oklch(0.96 0.02 60);
+  --foreground: oklch(0.22 0.04 60);
+  --card: oklch(0.98 0.015 60);
+  --card-foreground: oklch(0.22 0.04 60);
+  --popover: oklch(0.98 0.015 60);
+  --popover-foreground: oklch(0.22 0.04 60);
+  --primary: oklch(0.52 0.1 60);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.92 0.025 60);
+  --secondary-foreground: oklch(0.22 0.04 60);
+  --muted: oklch(0.90 0.02 60);
+  --muted-foreground: oklch(0.48 0.04 60);
+  --accent: oklch(0.48 0.18 25);
+  --accent-foreground: oklch(0.99 0 0);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.86 0.025 60);
+  --input: oklch(0.86 0.025 60);
+  --ring: oklch(0.52 0.1 60);
+  --pattern-opacity: 0.035;
+}
+
+[data-theme="khaki"].dark,
+.dark[data-theme="khaki"] {
+  --background: oklch(0.16 0.04 60);
+  --foreground: oklch(0.92 0.015 60);
+  --card: oklch(0.20 0.04 60);
+  --card-foreground: oklch(0.92 0.015 60);
+  --popover: oklch(0.20 0.04 60);
+  --popover-foreground: oklch(0.92 0.015 60);
+  --primary: oklch(0.62 0.1 60);
+  --primary-foreground: oklch(0.16 0.04 60);
+  --secondary: oklch(0.24 0.04 60);
+  --secondary-foreground: oklch(0.92 0.015 60);
+  --muted: oklch(0.24 0.04 60);
+  --muted-foreground: oklch(0.62 0.04 60);
+  --accent: oklch(0.58 0.18 25);
+  --accent-foreground: oklch(0.16 0.04 60);
+  --border: oklch(0.30 0.04 60);
+  --input: oklch(0.30 0.04 60);
+  --ring: oklch(0.62 0.1 60);
+  --pattern-opacity: 0.05;
+}
+
+/* Chart colors for all themes */
+:root,
+[data-theme] {
+  --chart-1: var(--primary);
+  --chart-2: var(--accent);
+  --chart-3: oklch(0.55 0.12 180);
+  --chart-4: oklch(0.72 0.14 85);
+  --chart-5: oklch(0.50 0.16 280);
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+@theme inline {
+  --font-sans: var(--font-vazirmatn, 'Vazirmatn'), 'Tahoma', system-ui, sans-serif;
+  --font-serif: var(--font-vazirmatn, 'Vazirmatn'), 'Tahoma', serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Persian pattern background */
+.persian-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L30 60M0 30L60 30M15 15L45 45M45 15L15 45' stroke='%23000' stroke-width='0.5' fill='none' opacity='0.15'/%3E%3Ccircle cx='30' cy='30' r='8' stroke='%23000' stroke-width='0.5' fill='none' opacity='0.1'/%3E%3C/svg%3E");
+  opacity: var(--pattern-opacity, 0.03);
+}
+
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Smooth theme transitions */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.transition-theme {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
