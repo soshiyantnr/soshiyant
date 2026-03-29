@@ -3,32 +3,6 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArticleCard } from "./article-card"
-import Link from "next/link"
-
-interface Post {
-  id: string
-  title: string
-  slug: string
-  excerpt: string
-  coverImage?: {
-    url: string
-  }
-  category: string
-  categorySlug?: string
-  readTime: string          // از readingTime در Hygraph تبدیل می‌شود
-  author: {
-    name: string
-    slug: string
-    avatar?: {
-      url: string
-    }
-  }
-  featured?: boolean
-}
-
-interface MasonryGridProps {
-  posts: Post[]
-}
 
 const categories = [
   { id: "all", label: "همه" },
@@ -40,15 +14,76 @@ const categories = [
   { id: "business", label: "کسب‌وکار" },
 ]
 
-export function MasonryGrid({ posts }: MasonryGridProps) {
+const articles = [
+  {
+    title: "هوش مصنوعی و آینده کسب‌وکارهای ایرانی",
+    excerpt: "چگونه هوش مصنوعی می‌تواند صنایع مختلف ایران را متحول کند و فرصت‌های جدیدی برای کارآفرینان ایجاد نماید. در این مقاله به بررسی عمیق تاثیرات هوش مصنوعی می‌پردازیم.",
+    category: "فناوری",
+    categorySlug: "technology",
+    readTime: "۸ دقیقه",
+    author: { name: "سارا احمدی", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80", initials: "سا", slug: "sara-ahmadi" },
+    imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80",
+    featured: true,
+    slug: "ai-future-iranian-businesses",
+  },
+  {
+    title: "طراحی مینیمال در معماری ایرانی مدرن",
+    excerpt: "نگاهی به ترکیب زیبایی‌شناسی سنتی ایران با اصول طراحی مدرن و مینیمال.",
+    category: "طراحی",
+    categorySlug: "design",
+    readTime: "۶ دقیقه",
+    author: { name: "علی رضایی", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80", initials: "عر", slug: "ali-rezaei" },
+    imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
+    slug: "minimal-design-iranian-architecture",
+  },
+  {
+    title: "روش‌های نوین یادگیری زبان برنامه‌نویسی",
+    excerpt: "بهترین استراتژی‌ها برای یادگیری سریع و موثر زبان‌های برنامه‌نویسی در سال ۱۴۰۵.",
+    category: "آموزش",
+    categorySlug: "education",
+    readTime: "۱۰ دقیقه",
+    author: { name: "مریم کریمی", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80", initials: "مک", slug: "maryam-karimi" },
+    imageUrl: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&q=80",
+    slug: "modern-programming-learning",
+  },
+  {
+    title: "سفر به دل کویر لوت",
+    excerpt: "روایتی از سفر به یکی از شگفت‌انگیزترین مناظر طبیعی ایران و تجربه‌های فراموش‌نشدنی.",
+    category: "سفر",
+    categorySlug: "travel",
+    readTime: "۷ دقیقه",
+    author: { name: "رضا محمدی", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80", initials: "رم", slug: "reza-mohammadi" },
+    imageUrl: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&q=80",
+    slug: "journey-to-lut-desert",
+  },
+  {
+    title: "هنر خوشنویسی در عصر دیجیتال",
+    excerpt: "چگونه هنرمندان ایرانی خوشنویسی سنتی را با ابزارهای دیجیتال ترکیب می‌کنند.",
+    category: "هنر",
+    categorySlug: "art",
+    readTime: "۵ دقیقه",
+    author: { name: "نازنین حسینی", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80", initials: "نح", slug: "nazanin-hosseini" },
+    imageUrl: "https://images.unsplash.com/photo-1585159812596-fac104f2f069?w=800&q=80",
+    slug: "calligraphy-digital-age",
+  },
+  {
+    title: "استارتاپ‌های موفق ایرانی در سال ۱۴۰۵",
+    excerpt: "معرفی و بررسی استارتاپ‌هایی که در سال جاری موفق به جذب سرمایه شده‌اند.",
+    category: "کسب‌وکار",
+    categorySlug: "business",
+    readTime: "۹ دقیقه",
+    author: { name: "امیر نوری", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80", initials: "ان", slug: "amir-noori" },
+    imageUrl: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&q=80",
+    slug: "successful-iranian-startups",
+  },
+]
+
+export function MasonryGrid() {
   const [activeCategory, setActiveCategory] = useState("all")
 
-  const filteredPosts = activeCategory === "all" 
-    ? posts 
-    : posts.filter(post => 
-        post.categorySlug === activeCategory || 
-        post.category.toLowerCase() === activeCategory
-      )
+  const filteredArticles = activeCategory === "all" 
+    ? articles 
+    : articles.filter(article => article.categorySlug === activeCategory)
 
   return (
     <section id="latest-posts" className="py-16 sm:py-24 px-4 sm:px-6">
@@ -68,7 +103,7 @@ export function MasonryGrid({ posts }: MasonryGridProps) {
           </h2>
         </motion.div>
 
-        {/* Category Filter - دقیقاً همان ظاهر قبلی */}
+        {/* Category Filter */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -93,7 +128,7 @@ export function MasonryGrid({ posts }: MasonryGridProps) {
           </div>
         </motion.div>
 
-        {/* Articles Grid - ظاهر قبلی حفظ شده */}
+        {/* Articles Grid */}
         <AnimatePresence mode="wait">
           <motion.div 
             key={activeCategory}
@@ -103,25 +138,17 @@ export function MasonryGrid({ posts }: MasonryGridProps) {
             transition={{ duration: 0.4 }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 auto-rows-auto"
           >
-            {filteredPosts.map((article, index) => (
+            {filteredArticles.map((article, index) => (
               <ArticleCard
                 key={article.slug}
-                title={article.title}
-                excerpt={article.excerpt}
-                category={article.category}
-                categorySlug={article.categorySlug || article.category.toLowerCase()}
-                readTime={article.readTime}
-                author={article.author}
-                imageUrl={article.coverImage?.url || ""}
-                slug={article.slug}
-                featured={article.featured}
+                {...article}
                 index={index}
               />
             ))}
           </motion.div>
         </AnimatePresence>
 
-        {filteredPosts.length === 0 && (
+        {filteredArticles.length === 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
