@@ -2,9 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArticleCard } from "./article-card"
-import Link from "next/link"
-
+import { ArticleCard } from "@/components/blog/article-card"
 interface Author {
   name: string
   slug: string
