@@ -14,14 +14,18 @@ async function getPosts() {
         title
         slug
         excerpt
-        coverImage { url }
+        coverImage {
+          url
+        }
         publishDate
         readingTime
         category
         author {
           name
           slug
-          avatar { url }
+          avatar {
+            url
+          }
         }
       }
     }
