@@ -22,8 +22,8 @@ export async function fetchHygraph<T = any>(
         variables 
       }),
       next: { 
-        revalidate: 60,           // هر ۶۰ ثانیه بروزرسانی شود (ISR)
-        tags: ['hygraph']         // برای revalidate on demand در آینده
+        revalidate: 60,
+        tags: ['hygraph']
       },
     });
 
