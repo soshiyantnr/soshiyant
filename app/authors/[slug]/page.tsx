@@ -17,14 +17,13 @@ interface AuthorPageProps {
 export default async function AuthorPage({ params }: AuthorPageProps) {
   const { slug } = await params
   
-  const authorData = await getAuthorBySlug(slug)
+  const author = await getAuthorBySlug(slug)
   const postsData = await getAuthorPosts(slug)
   
-  if (!authorData || authorData.length === 0) {
+  if (!author) {
     notFound()
   }
   
-  const author = authorData[0]
   const posts = postsData || []
 
   // Get unique categories from posts

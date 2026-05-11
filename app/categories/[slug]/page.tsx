@@ -22,11 +22,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     getAllCategories(),
   ])
   
-  if (!categoryData || categoryData.length === 0) {
+  if (!categoryData) {
     notFound()
   }
   
-  const category = categoryData[0]
+  const category = categoryData
   const posts = postsData || []
   const allCategories = (allCatsData || []).filter(c => c.slug !== slug)
 

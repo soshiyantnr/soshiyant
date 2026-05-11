@@ -21,13 +21,11 @@ interface PostPageProps {
 export default async function PostPage({ params }: PostPageProps) {
   const { slug } = await params
   
-  const postData = await getPostBySlug(slug)
+  const post = await getPostBySlug(slug)
   
-  if (!postData || postData.length === 0) {
+  if (!post) {
     notFound()
   }
-  
-  const post = postData[0]
   
   let relatedPosts = []
   if (post.category?.id) {
