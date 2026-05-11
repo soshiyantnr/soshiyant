@@ -1,72 +1,37 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { getAuthorBySlug, getAuthorPosts } from "@/lib/hygraph-api"
 import { Header } from "@/components/blog/header"
 import { Footer } from "@/components/blog/footer"
 import { ReadingProgress } from "@/components/blog/reading-progress"
-import { FilterBar } from "@/components/blog/filter-bar"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { getAuthorBySlug, getAuthorPosts } from "@/lib/hygraph-api"
+import { notFound } from "next/navigation"
+import { motion } from "framer-motion"
 
 interface AuthorPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-export default function AuthorPage({ params }: AuthorPageProps) {
-  const [author, setAuthor] = useState<any>(null)
-  const [posts, setPosts] = useState<any[]>([])
-  const [loading, setLoading] = useState(true)
-  const [activeFilter, setActiveFilter] = useState("همه")
-
-  useEffect(() => {
-    const loadAuthor = async () => {
-      try {
-        const [authorData, postsData] = await Promise.all([
-          getAuthorBySlug(params.slug),
-          getAuthorPosts(params.slug),
-        ])
-        setAuthor(authorData)
-        setPosts(postsData)
-      } catch (error) {
-        console.error("Error loading author:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadAuthor()
-  }, [params.slug])
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">درحال بارگزاری...</p>
-      </div>
-    )
+export default async function AuthorPage({ params }: AuthorPageProps) {
+  const { slug } = await params
+  
+  const authorData = await getAuthorBySlug(slug)
+  const postsData = await getAuthorPosts(slug)
+  
+  if (!authorData || authorData.length === 0) {
+    notFound()
   }
-
-  if (!author) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">نویسنده‌ای یافت نشد.</p>
-      </div>
-    )
-  }
+  
+  const author = authorData[0]
+  const posts = postsData || []
 
   // Get unique categories from posts
   const categoryNames = posts
     .map(p => p.category?.name)
     .filter((name): name is string => !!name)
   const categories = ["همه", ...Array.from(new Set(categoryNames))]
-  
-  const filteredPosts = activeFilter === "همه" 
-    ? posts 
-    : posts.filter(p => p.category?.name === activeFilter)
 
   return (
     <div className="min-h-screen bg-background">
@@ -140,17 +105,8 @@ export default function AuthorPage({ params }: AuthorPageProps) {
             <h2 className="text-2xl font-bold">همه مقالات</h2>
           </div>
 
-          {categories.length > 1 && (
-            <FilterBar
-              filters={categories}
-              activeFilter={activeFilter}
-              onFilterChange={setActiveFilter}
-              label="دسته‌بندی"
-            />
-          )}
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filteredPosts.map((post, index) => (
+            {posts.map((post, index) => (
               <motion.article
                 key={post.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -196,7 +152,7 @@ export default function AuthorPage({ params }: AuthorPageProps) {
             ))}
           </div>
 
-          {filteredPosts.length === 0 && (
+          {posts.length === 0 && (
             <div className="text-center py-16">
               <p className="text-muted-foreground">هیچ مقاله‌ای یافت نشد.</p>
             </div>

@@ -1,7 +1,4 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { getPostBySlug, getRelatedPosts } from "@/lib/hygraph-api"
 import { Header } from "@/components/blog/header"
 import { Footer } from "@/components/blog/footer"
 import { ReadingProgress } from "@/components/blog/reading-progress"
@@ -12,59 +9,30 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ArrowRight, Calendar, Clock, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { getPostBySlug, getRelatedPosts } from "@/lib/hygraph-api"
+import { notFound } from "next/navigation"
+import { motion } from "framer-motion"
 
 interface PostPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-export default function PostPage({ params }: PostPageProps) {
-  const [post, setPost] = useState<any>(null)
-  const [relatedPosts, setRelatedPosts] = useState<any[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const loadPost = async () => {
-      try {
-        const postData = await getPostBySlug(params.slug)
-        if (postData) {
-          setPost(postData)
-          // Get related posts if category exists
-          if (postData.category?.id) {
-            const related = await getRelatedPosts(postData.category.id, postData.id)
-            setRelatedPosts(related)
-          }
-        }
-      } catch (error) {
-        console.error("Error loading post:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadPost()
-  }, [params.slug])
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-muted-foreground">درحال بارگزاری...</p>
-        </div>
-      </div>
-    )
+export default async function PostPage({ params }: PostPageProps) {
+  const { slug } = await params
+  
+  const postData = await getPostBySlug(slug)
+  
+  if (!postData || postData.length === 0) {
+    notFound()
   }
-
-  if (!post) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-muted-foreground">مقاله‌ای یافت نشد.</p>
-        </div>
-      </div>
-    )
+  
+  const post = postData[0]
+  
+  let relatedPosts = []
+  if (post.category?.id) {
+    const related = await getRelatedPosts(post.category.id, post.id)
+    relatedPosts = related
   }
 
   const formattedDate = new Date(post.publishedAt).toLocaleDateString("fa-IR", {

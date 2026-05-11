@@ -60,13 +60,9 @@ export function ArticleCard({
               
               {/* Category pill */}
               <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
-                <Link 
-                  href={`/categories/${categorySlug}`}
-                  onClick={(e) => e.stopPropagation()}
-                  className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-background/90 backdrop-blur-sm text-foreground rounded-full text-xs font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
-                >
+                <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-background/90 backdrop-blur-sm text-foreground rounded-full text-xs font-medium hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer block">
                   {category}
-                </Link>
+                </span>
               </div>
 
               {/* Reading time */}
@@ -94,11 +90,7 @@ export function ArticleCard({
             </div>
             
             <div className="flex items-center gap-3 pt-3 border-t border-border/50">
-              <Link 
-                href={`/authors/${author.slug}`}
-                onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-2 sm:gap-3 group/author"
-              >
+              <div className="flex items-center gap-2 sm:gap-3 group/author">
                 <Avatar className="h-8 w-8 sm:h-9 sm:w-9 ring-2 ring-background group-hover/author:ring-primary transition-colors">
                   <AvatarImage src={author.avatar} alt={author.name} />
                   <AvatarFallback className="text-xs bg-secondary text-secondary-foreground">
@@ -106,7 +98,7 @@ export function ArticleCard({
                   </AvatarFallback>
                 </Avatar>
                 <span className="text-xs sm:text-sm font-medium group-hover/author:text-primary transition-colors">{author.name}</span>
-              </Link>
+              </div>
             </div>
           </div>
         </div>

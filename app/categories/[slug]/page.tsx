@@ -1,63 +1,34 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { getCategoryBySlug, getCategoryPosts, getAllCategories } from "@/lib/hygraph-api"
 import { Header } from "@/components/blog/header"
 import { Footer } from "@/components/blog/footer"
 import { ReadingProgress } from "@/components/blog/reading-progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
-import { getCategoryBySlug, getCategoryPosts, getAllCategories } from "@/lib/hygraph-api"
+import { notFound } from "next/navigation"
+import { motion } from "framer-motion"
 
 interface CategoryPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-export default function CategoryPage({ params }: CategoryPageProps) {
-  const [category, setCategory] = useState<any>(null)
-  const [posts, setPosts] = useState<any[]>([])
-  const [allCategories, setAllCategories] = useState<any[]>([])
-  const [loading, setLoading] = useState(true)
-  const [activeSort, setActiveSort] = useState("latest")
-
-  useEffect(() => {
-    const loadCategory = async () => {
-      try {
-        const [categoryData, postsData, allCatsData] = await Promise.all([
-          getCategoryBySlug(params.slug),
-          getCategoryPosts(params.slug),
-          getAllCategories(),
-        ])
-        setCategory(categoryData)
-        setPosts(postsData)
-        setAllCategories(allCatsData.filter(c => c.slug !== params.slug))
-      } catch (error) {
-        console.error("Error loading category:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadCategory()
-  }, [params.slug])
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">درحال بارگزاری...</p>
-      </div>
-    )
+export default async function CategoryPage({ params }: CategoryPageProps) {
+  const { slug } = await params
+  
+  const [categoryData, postsData, allCatsData] = await Promise.all([
+    getCategoryBySlug(slug),
+    getCategoryPosts(slug),
+    getAllCategories(),
+  ])
+  
+  if (!categoryData || categoryData.length === 0) {
+    notFound()
   }
-
-  if (!category) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">دسته‌بندی‌ای یافت نشد.</p>
-      </div>
-    )
-  }
+  
+  const category = categoryData[0]
+  const posts = postsData || []
+  const allCategories = (allCatsData || []).filter(c => c.slug !== slug)
 
   const featuredPost = posts[0]
   const otherPosts = posts.slice(1)
