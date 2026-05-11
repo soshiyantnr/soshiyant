@@ -31,10 +31,11 @@ export default function PostPage({ params }: PostPageProps) {
         const postData = await getPostBySlug(params.slug)
         if (postData) {
           setPost(postData)
-          // Get related posts
-          const categoryIds = postData.categories.map((cat: any) => cat.id)
-          const related = await getRelatedPosts(categoryIds, postData.id)
-          setRelatedPosts(related)
+          // Get related posts if category exists
+          if (postData.category?.id) {
+            const related = await getRelatedPosts(postData.category.id, postData.id)
+            setRelatedPosts(related)
+          }
         }
       } catch (error) {
         console.error("Error loading post:", error)
@@ -94,12 +95,12 @@ export default function PostPage({ params }: PostPageProps) {
               </Link>
 
               <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-sm mb-4 sm:mb-6">
-                {post.categories.length > 0 && (
+                {post.category && (
                   <Link
-                    href={`/categories/${post.categories[0].slug}`}
+                    href={`/categories/${post.category.slug}`}
                     className="px-3 py-1 bg-primary/10 text-primary rounded-full font-medium hover:bg-primary/20 transition-colors"
                   >
-                    {post.categories[0].name}
+                    {post.category.name}
                   </Link>
                 )}
                 <span className="flex items-center gap-1.5 text-muted-foreground">
@@ -108,7 +109,7 @@ export default function PostPage({ params }: PostPageProps) {
                 </span>
                 <span className="flex items-center gap-1.5 text-muted-foreground">
                   <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  ۵ دقیقه
+                  {post.readingTime ? `${post.readingTime} دقیقه` : "۵ دقیقه"}
                 </span>
               </div>
 
@@ -123,14 +124,14 @@ export default function PostPage({ params }: PostPageProps) {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-8 sm:mt-10 pt-4 sm:pt-6 border-t border-border gap-4">
                 <Link href={`/authors/${post.author.slug}`} className="flex items-center gap-3 group">
                   <Avatar className="h-10 w-10 sm:h-12 sm:w-12 ring-2 ring-background">
-                    <AvatarImage src={post.author.image?.url} alt={post.author.name} />
+                    <AvatarImage src={post.author.avatar?.url} alt={post.author.name} />
                     <AvatarFallback className="bg-secondary text-secondary-foreground">
-                      {post.author.name.split(" ").map(n => n[0]).join("").slice(0, 2)}
+                      {post.author.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
                     </AvatarFallback>
                   </Avatar>
                   <div>
                     <p className="font-medium group-hover:text-primary transition-colors">{post.author.name}</p>
-                    <p className="text-sm text-muted-foreground">نویسنده</p>
+                    <p className="text-sm text-muted-foreground">{post.author.job || "نویسنده"}</p>
                   </div>
                 </Link>
 
@@ -164,18 +165,18 @@ export default function PostPage({ params }: PostPageProps) {
         {/* Content */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <PostContent>
-            <div className="prose prose-invert max-w-none">
-              <p>{post.excerpt}</p>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                اینجا محتوای کامل مقاله قرار می‌گیرد. برای مدیریت محتوا از طریق Hygraph، 
-                لطفاً محتوای مفصل را به Hygraph اضافه کنید.
-              </p>
-            </div>
+            {post.body?.html ? (
+              <div dangerouslySetInnerHTML={{ __html: post.body.html }} />
+            ) : (
+              <div className="prose prose-invert max-w-none">
+                <p>{post.excerpt}</p>
+              </div>
+            )}
           </PostContent>
 
           <AuthorBio 
             name={post.author.name}
-            avatar={post.author.image?.url}
+            avatar={post.author.avatar?.url}
             initials={post.author.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
             slug={post.author.slug}
             bio={post.author.bio?.html}
@@ -187,12 +188,12 @@ export default function PostPage({ params }: PostPageProps) {
                 slug: p.slug,
                 title: p.title,
                 excerpt: p.excerpt,
-                category: p.categories[0]?.name || "",
-                readTime: "۵ دقیقه",
-                imageUrl: p.coverImage.url,
+                category: p.category?.name || "",
+                readTime: p.readingTime ? `${p.readingTime} دقیقه` : "۵ دقیقه",
+                imageUrl: p.coverImage?.url || "",
                 author: { 
                   name: p.author.name, 
-                  avatar: p.author.image?.url || "",
+                  avatar: p.author.avatar?.url || "",
                   initials: p.author.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2)
                 },
               }))}

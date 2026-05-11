@@ -1,31 +1,38 @@
+// Queries based on actual Hygraph schema
+
 export const POSTS_QUERY = `
   query GetPosts($first: Int = 100, $orderBy: PostOrderByInput = createdAt_DESC) {
     posts(first: $first, orderBy: $orderBy) {
       id
       title
+      subtitle
       slug
       excerpt
+      body {
+        html
+      }
+      publishDate
+      readingTime
+      seoTitle
+      seoDescription
+      tags
+      publishedAt
+      updatedAt
+      createdAt
       coverImage {
         id
         url
-        alt
       }
       author {
         id
         name
         slug
-        image {
-          url
-        }
       }
-      categories {
+      category {
         id
         name
         slug
       }
-      createdAt
-      updatedAt
-      publishedAt
     }
   }
 `;
@@ -35,29 +42,42 @@ export const POST_BY_SLUG_QUERY = `
     posts(where: { slug: $slug }, first: 1) {
       id
       title
+      subtitle
       slug
       excerpt
+      body {
+        html
+        raw
+      }
+      publishDate
+      readingTime
+      seoTitle
+      seoDescription
+      tags
+      publishedAt
+      updatedAt
+      createdAt
       coverImage {
         id
         url
-        alt
       }
       author {
         id
         name
         slug
-        image {
+        bio {
+          html
+        }
+        avatar {
           url
         }
+        job
       }
-      categories {
+      category {
         id
         name
         slug
       }
-      createdAt
-      updatedAt
-      publishedAt
     }
   }
 `;
@@ -71,31 +91,34 @@ export const AUTHOR_BY_SLUG_QUERY = `
       bio {
         html
       }
-      image {
-        id
+      avatar {
         url
       }
+      email
+      socialLinks
+      monthlyReaders
+      job
     }
   }
 `;
 
 export const AUTHOR_POSTS_QUERY = `
   query GetAuthorPosts($slug: String!, $first: Int = 100) {
-    authors(where: { slug: $slug }, first: 1) {
+    posts(where: { author: { slug: $slug } }, first: $first, orderBy: createdAt_DESC) {
       id
-      name
+      title
       slug
-      posts(first: $first, orderBy: createdAt_DESC) {
-        id
-        title
-        slug
-        excerpt
-        coverImage {
-          url
-          alt
-        }
-        createdAt
+      excerpt
+      readingTime
+      coverImage {
+        url
       }
+      category {
+        id
+        name
+        slug
+      }
+      createdAt
     }
   }
 `;
@@ -113,34 +136,32 @@ export const CATEGORY_BY_SLUG_QUERY = `
 
 export const CATEGORY_POSTS_QUERY = `
   query GetCategoryPosts($slug: String!, $first: Int = 100) {
-    categories(where: { slug: $slug }, first: 1) {
+    posts(where: { category: { slug: $slug } }, first: $first, orderBy: createdAt_DESC) {
       id
-      name
+      title
       slug
-      posts(first: $first, orderBy: createdAt_DESC) {
-        id
-        title
-        slug
-        excerpt
-        coverImage {
-          url
-          alt
-        }
-        author {
-          id
-          name
-          slug
-        }
-        createdAt
+      excerpt
+      readingTime
+      coverImage {
+        url
       }
+      author {
+        id
+        name
+        slug
+        avatar {
+          url
+        }
+      }
+      createdAt
     }
   }
 `;
 
 export const RELATED_POSTS_QUERY = `
-  query GetRelatedPosts($categoryIds: [String!]!, $excludePostId: String!, $first: Int = 3) {
+  query GetRelatedPosts($categoryId: ID!, $excludePostId: ID!, $first: Int = 3) {
     posts(
-      where: { categories_some: { id_in: $categoryIds }, id_not: $excludePostId }
+      where: { category: { id: $categoryId }, id_not: $excludePostId }
       first: $first
       orderBy: createdAt_DESC
     ) {
@@ -148,13 +169,16 @@ export const RELATED_POSTS_QUERY = `
       title
       slug
       excerpt
+      readingTime
       coverImage {
         url
-        alt
       }
       author {
         name
         slug
+        avatar {
+          url
+        }
       }
       createdAt
     }
@@ -167,9 +191,10 @@ export const ALL_AUTHORS_QUERY = `
       id
       name
       slug
-      image {
+      avatar {
         url
       }
+      job
     }
   }
 `;

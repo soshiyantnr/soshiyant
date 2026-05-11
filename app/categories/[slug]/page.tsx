@@ -133,14 +133,14 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                     </p>
                     <div className="flex items-center gap-3 mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-border/50">
                       <Avatar className="h-7 w-7 sm:h-8 sm:w-8">
-                        <AvatarImage src={featuredPost.author.image?.url} alt={featuredPost.author.name} />
+                        <AvatarImage src={featuredPost.author.avatar?.url} alt={featuredPost.author.name} />
                         <AvatarFallback className="text-xs bg-secondary text-secondary-foreground">
                           {featuredPost.author.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
                         </AvatarFallback>
                       </Avatar>
                       <span className="text-xs sm:text-sm font-medium">{featuredPost.author.name}</span>
                       <span className="text-xs sm:text-sm text-muted-foreground">·</span>
-                      <span className="text-xs sm:text-sm text-muted-foreground">۵ دقیقه</span>
+                      <span className="text-xs sm:text-sm text-muted-foreground">{featuredPost.readingTime ? `${featuredPost.readingTime} دقیقه` : "۵ دقیقه"}</span>
                     </div>
                   </div>
                 </div>
@@ -176,7 +176,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                     
                     <div className="p-4 sm:p-5">
                       <div className="flex items-center gap-2 sm:gap-3 text-xs tracking-wide mb-2 sm:mb-3">
-                        <span className="text-muted-foreground">۵ دقیقه</span>
+                        <span className="text-muted-foreground">{post.readingTime ? `${post.readingTime} دقیقه` : "۵ دقیقه"}</span>
                       </div>
                       
                       <h4 className="text-base sm:text-lg font-bold leading-tight group-hover:text-primary transition-colors duration-300 line-clamp-2">
@@ -185,7 +185,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                       
                       <div className="flex items-center gap-2 mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-border/50">
                         <Avatar className="h-5 w-5 sm:h-6 sm:w-6">
-                          <AvatarImage src={post.author.image?.url} alt={post.author.name} />
+                          <AvatarImage src={post.author.avatar?.url} alt={post.author.name} />
                           <AvatarFallback className="text-xs bg-secondary text-secondary-foreground">
                             {post.author.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
                           </AvatarFallback>

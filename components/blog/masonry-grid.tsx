@@ -15,7 +15,7 @@ export function MasonryGrid({ posts, categories }: MasonryGridProps) {
 
   const filteredPosts = activeCategory === "all" 
     ? posts 
-    : posts.filter(post => post.categories.some(cat => cat.slug === activeCategory))
+    : posts.filter(post => post.category?.slug === activeCategory)
 
   return (
     <section id="latest-posts" className="py-16 sm:py-24 px-4 sm:px-6">
@@ -85,16 +85,16 @@ export function MasonryGrid({ posts, categories }: MasonryGridProps) {
                 key={post.id}
                 title={post.title}
                 excerpt={post.excerpt}
-                category={post.categories[0]?.name || ""}
-                categorySlug={post.categories[0]?.slug || ""}
-                readTime="۵ دقیقه"
+                category={post.category?.name || ""}
+                categorySlug={post.category?.slug || ""}
+                readTime={post.readingTime ? `${post.readingTime} دقیقه` : "۵ دقیقه"}
                 author={{
                   name: post.author.name,
-                  avatar: post.author.image?.url || "",
+                  avatar: post.author.avatar?.url || "",
                   initials: post.author.name.split(" ").map(n => n[0]).join("").slice(0, 2),
                   slug: post.author.slug
                 }}
-                imageUrl={post.coverImage.url}
+                imageUrl={post.coverImage?.url || ""}
                 featured={index === 0}
                 index={index}
                 slug={post.slug}

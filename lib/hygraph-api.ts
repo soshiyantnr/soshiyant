@@ -21,10 +21,13 @@ export interface Author {
   bio?: {
     html: string;
   };
-  image?: {
-    id: string;
+  avatar?: {
     url: string;
   };
+  email?: string;
+  socialLinks?: Record<string, string>;
+  monthlyReaders?: number;
+  job?: string;
 }
 
 export interface Category {
@@ -35,19 +38,28 @@ export interface Category {
 }
 
 export interface CoverImage {
-  id: string;
+  id?: string;
   url: string;
-  alt?: string;
 }
 
 export interface Post {
   id: string;
   title: string;
+  subtitle?: string;
   slug: string;
   excerpt: string;
+  body?: {
+    html: string;
+    raw?: any;
+  };
+  publishDate?: string;
+  readingTime?: number;
+  seoTitle?: string;
+  seoDescription?: string;
+  tags?: string[];
   coverImage: CoverImage;
   author: Author;
-  categories: Category[];
+  category?: Category;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -55,7 +67,7 @@ export interface Post {
 
 export async function getPosts(): Promise<Post[]> {
   const data = await hygraphClient.query<{ posts: Post[] }>(POSTS_QUERY);
-  return data.posts;
+  return data.posts || [];
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
@@ -74,10 +86,8 @@ export async function getAuthorBySlug(slug: string): Promise<Author | null> {
 }
 
 export async function getAuthorPosts(slug: string): Promise<Post[]> {
-  const data = await hygraphClient.query<{
-    authors: (Author & { posts: Post[] })[];
-  }>(AUTHOR_POSTS_QUERY, { slug });
-  return data.authors[0]?.posts || [];
+  const data = await hygraphClient.query<{ posts: Post[] }>(AUTHOR_POSTS_QUERY, { slug });
+  return data.posts || [];
 }
 
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
@@ -89,39 +99,37 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
 }
 
 export async function getCategoryPosts(slug: string): Promise<Post[]> {
-  const data = await hygraphClient.query<{
-    categories: (Category & { posts: Post[] })[];
-  }>(CATEGORY_POSTS_QUERY, { slug });
-  return data.categories[0]?.posts || [];
+  const data = await hygraphClient.query<{ posts: Post[] }>(CATEGORY_POSTS_QUERY, { slug });
+  return data.posts || [];
 }
 
 export async function getRelatedPosts(
-  categoryIds: string[],
+  categoryId: string,
   excludePostId: string
 ): Promise<Post[]> {
   const data = await hygraphClient.query<{ posts: Post[] }>(
     RELATED_POSTS_QUERY,
     {
-      categoryIds,
+      categoryId,
       excludePostId,
       first: 3,
     }
   );
-  return data.posts;
+  return data.posts || [];
 }
 
 export async function getAllAuthors(): Promise<Author[]> {
   const data = await hygraphClient.query<{ authors: Author[] }>(
     ALL_AUTHORS_QUERY
   );
-  return data.authors;
+  return data.authors || [];
 }
 
 export async function getAllCategories(): Promise<Category[]> {
   const data = await hygraphClient.query<{ categories: Category[] }>(
     ALL_CATEGORIES_QUERY
   );
-  return data.categories;
+  return data.categories || [];
 }
 
 export async function getPostSlugs(): Promise<string[]> {
