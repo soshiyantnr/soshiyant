@@ -5,12 +5,12 @@ import { ReadingProgress } from "@/components/blog/reading-progress"
 import { AuthorBio } from "@/components/blog/author-bio"
 import { RelatedPosts } from "@/components/blog/related-posts"
 import { PostContent } from "@/components/blog/post-content"
+import { PostPageClient } from "@/components/blog/post-page-client"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ArrowRight, Calendar, Clock, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { motion } from "framer-motion"
 
 interface PostPageProps {
   params: Promise<{
@@ -47,11 +47,7 @@ export default async function PostPage({ params }: PostPageProps) {
       <article>
         <header className="pt-24 sm:pt-32 pb-8 sm:pb-12">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
+            <div>
               <Link
                 href="/"
                 className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 sm:mb-8"
@@ -106,18 +102,13 @@ export default async function PostPage({ params }: PostPageProps) {
                   اشتراک‌گذاری
                 </Button>
               </div>
-            </motion.div>
+            </div>
           </div>
         </header>
 
         {/* Featured Image */}
         {post.coverImage && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="max-w-6xl mx-auto px-4 sm:px-6 mb-10 sm:mb-16"
-          >
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-10 sm:mb-16">
             <div className="aspect-[16/9] sm:aspect-[21/9] rounded-xl sm:rounded-2xl overflow-hidden">
               <img
                 src={post.coverImage.url}
@@ -125,7 +116,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 className="w-full h-full object-cover"
               />
             </div>
-          </motion.div>
+          </div>
         )}
 
         {/* Content */}

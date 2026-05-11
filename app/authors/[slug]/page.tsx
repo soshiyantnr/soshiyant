@@ -6,7 +6,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { motion } from "framer-motion"
 
 interface AuthorPageProps {
   params: Promise<{
@@ -40,12 +39,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
       {/* Author Hero */}
       <section className="pt-32 pb-16 border-b border-border">
         <div className="max-w-5xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col md:flex-row gap-8 items-start"
-          >
+          <div className="flex flex-col md:flex-row gap-8 items-start">
             <Avatar className="h-32 w-32 ring-4 ring-background shadow-xl">
               <AvatarImage src={author.avatar?.url} alt={author.name} />
               <AvatarFallback className="text-2xl bg-secondary text-secondary-foreground">
@@ -74,15 +68,10 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                 </Button>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="grid grid-cols-2 md:grid-cols-3 gap-8 mt-12 pt-8 border-t border-border"
-          >
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mt-12 pt-8 border-t border-border">
             <div>
               <p className="text-3xl font-bold">{posts.length}</p>
               <p className="text-sm text-muted-foreground mt-1">مقاله منتشر شده</p>
@@ -93,7 +82,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                 <p className="text-sm text-muted-foreground mt-1">خواننده ماهانه</p>
               </div>
             )}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -106,13 +95,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {posts.map((post, index) => (
-              <motion.article
-                key={post.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="group"
-              >
+              <article key={post.id} className="group">
                 <Link href={`/posts/${post.slug}`} className="block">
                   <div className="relative overflow-hidden rounded-xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-foreground/5 transition-all duration-500">
                     {post.coverImage?.url && (
@@ -147,7 +130,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                     </div>
                   </div>
                 </Link>
-              </motion.article>
+              </article>
             ))}
           </div>
 

@@ -5,7 +5,6 @@ import { ReadingProgress } from "@/components/blog/reading-progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { motion } from "framer-motion"
 
 interface CategoryPageProps {
   params: Promise<{
@@ -43,11 +42,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         <div className="absolute inset-0 persian-pattern pointer-events-none" />
         
         <div className="max-w-5xl mx-auto px-4 sm:px-6 relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <div>
             <span className="text-xs sm:text-sm font-medium text-muted-foreground tracking-wider">
               دسته‌بندی
             </span>
@@ -66,7 +61,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 <p className="text-xs sm:text-sm text-muted-foreground">مقاله</p>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -75,12 +70,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           {/* Featured Article */}
           {featuredPost && (
-            <motion.article
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="group mb-10 sm:mb-12"
-            >
+            <article className="group mb-10 sm:mb-12">
               <Link href={`/posts/${featuredPost.slug}`} className="block">
                 <div className="grid md:grid-cols-2 gap-4 sm:gap-6 bg-card border border-border/50 rounded-xl sm:rounded-2xl overflow-hidden hover:border-primary/30 hover:shadow-xl hover:shadow-foreground/5 transition-all duration-500">
                   {featuredPost.coverImage && (
@@ -116,7 +106,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   </div>
                 </div>
               </Link>
-            </motion.article>
+            </article>
           )}
 
           {/* Grid */}
@@ -126,13 +116,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {otherPosts.map((post, index) => (
-              <motion.article
-                key={post.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="group"
-              >
+              <article key={post.id} className="group">
                 <Link href={`/posts/${post.slug}`} className="block">
                   <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-foreground/5 transition-all duration-500">
                     {post.coverImage && (
@@ -166,7 +150,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                     </div>
                   </div>
                 </Link>
-              </motion.article>
+              </article>
             ))}
           </div>
 
@@ -182,12 +166,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       {allCategories.length > 0 && (
         <section className="py-10 sm:py-16 border-t border-border bg-card">
           <div className="max-w-5xl mx-auto px-4 sm:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
+            <div>
               <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">دسته‌بندی‌های مرتبط</h3>
               <div className="flex flex-wrap gap-2 sm:gap-3">
                 {allCategories.slice(0, 4).map((cat) => (
@@ -200,7 +179,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   </Link>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
       )}
