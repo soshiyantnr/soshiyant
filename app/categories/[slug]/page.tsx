@@ -1,4 +1,4 @@
-import { getCategoryBySlug, getCategoryPosts, getAllCategories } from "@/lib/hygraph-api"
+import { getCategoryBySlug, getCategoryPosts, getAllCategories, getCategoryTopAuthors } from "@/lib/hygraph-api"
 import { Header } from "@/components/blog/header"
 import { Footer } from "@/components/blog/footer"
 import { ReadingProgress } from "@/components/blog/reading-progress"
@@ -6,19 +6,27 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
+// اعتبارسنجی مجدد هر ۶۰ ثانیه (ISR)
+export const revalidate = 60
+
 interface CategoryPageProps {
   params: Promise<{
     slug: string
   }>
+  searchParams: Promise<{
+    sort?: string
+  }>
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
+export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
   const { slug } = await params
+  const { sort } = await searchParams
   
-  const [categoryData, postsData, allCatsData] = await Promise.all([
+  const [categoryData, postsData, allCatsData, topAuthors] = await Promise.all([
     getCategoryBySlug(slug),
     getCategoryPosts(slug),
     getAllCategories(),
+    getCategoryTopAuthors(slug),
   ])
   
   if (!categoryData) {
@@ -26,8 +34,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   }
   
   const category = categoryData
-  const posts = postsData || []
+  let posts = postsData || []
   const allCategories = (allCatsData || []).filter(c => c.slug !== slug)
+
+  // مرتب‌سازی: جدیدترین (پیش‌فرض) یا قدیمی‌ترین
+  if (sort === "oldest") {
+    posts = [...posts].reverse()
+  }
 
   const featuredPost = posts[0]
   const otherPosts = posts.slice(1)
@@ -55,11 +68,35 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               </p>
             )}
 
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-border">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-border">
               <div>
-                <p className="text-xl sm:text-2xl font-bold">{posts.length}</p>
+                <p className="text-xl sm:text-2xl font-bold">{posts.length.toLocaleString("fa-IR")}</p>
                 <p className="text-xs sm:text-sm text-muted-foreground">مقاله</p>
               </div>
+
+              {topAuthors.length > 0 && (
+                <div>
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-2">نویسندگان برتر این دسته</p>
+                  <div className="flex items-center gap-2">
+                    <div className="flex -space-x-2 space-x-reverse">
+                      {topAuthors.map((author) => (
+                        <Link key={author.id} href={`/authors/${author.slug}`}>
+                          <Avatar className="h-8 w-8 ring-2 ring-background hover:ring-primary transition-all">
+                            <AvatarImage src={author.avatar?.url} alt={author.name} />
+                            <AvatarFallback className="text-[10px] bg-secondary text-secondary-foreground">
+                              {author.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
+                            </AvatarFallback>
+                          </Avatar>
+                        </Link>
+                      ))}
+                    </div>
+                    <span className="text-xs sm:text-sm text-muted-foreground">
+                      {topAuthors[0]?.name}
+                      {topAuthors.length > 1 && ` و ${(topAuthors.length - 1).toLocaleString("fa-IR")} نفر دیگر`}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -112,6 +149,32 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           {/* Grid */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
             <h3 className="text-lg sm:text-xl font-bold">همه مقالات</h3>
+
+            {posts.length > 1 && (
+              <div className="flex items-center gap-2 text-sm">
+                <span className="text-muted-foreground">مرتب‌سازی:</span>
+                <Link
+                  href={`/categories/${slug}`}
+                  className={`px-3 py-1.5 rounded-full font-medium transition-colors ${
+                    sort !== "oldest"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-secondary text-secondary-foreground hover:bg-primary/10 hover:text-primary"
+                  }`}
+                >
+                  جدیدترین
+                </Link>
+                <Link
+                  href={`/categories/${slug}?sort=oldest`}
+                  className={`px-3 py-1.5 rounded-full font-medium transition-colors ${
+                    sort === "oldest"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-secondary text-secondary-foreground hover:bg-primary/10 hover:text-primary"
+                  }`}
+                >
+                  قدیمی‌ترین
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">

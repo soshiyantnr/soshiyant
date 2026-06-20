@@ -5,7 +5,6 @@ import { ReadingProgress } from "@/components/blog/reading-progress"
 import { AuthorBio } from "@/components/blog/author-bio"
 import { RelatedPosts } from "@/components/blog/related-posts"
 import { PostContent } from "@/components/blog/post-content"
-import { PostPageClient } from "@/components/blog/post-page-client"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ArrowRight, Calendar, Clock, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -27,9 +26,11 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound()
   }
   
+  // دستهٔ اصلی پست (اولین دسته) برای یافتن مقالات مرتبط
+  const primaryCategory = post.category?.[0]
   let relatedPosts = []
-  if (post.category?.id) {
-    const related = await getRelatedPosts(post.category.id, post.id)
+  if (primaryCategory?.id) {
+    const related = await getRelatedPosts(primaryCategory.id, post.id)
     relatedPosts = related
   }
 
@@ -57,14 +58,15 @@ export default async function PostPage({ params }: PostPageProps) {
               </Link>
 
               <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-sm mb-4 sm:mb-6">
-                {post.category && (
+                {post.category?.map((cat) => (
                   <Link
-                    href={`/categories/${post.category.slug}`}
+                    key={cat.id}
+                    href={`/categories/${cat.slug}`}
                     className="px-3 py-1 bg-primary/10 text-primary rounded-full font-medium hover:bg-primary/20 transition-colors"
                   >
-                    {post.category.name}
+                    {cat.name}
                   </Link>
-                )}
+                ))}
                 <span className="flex items-center gap-1.5 text-muted-foreground">
                   <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   {formattedDate}
@@ -145,7 +147,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 slug: p.slug,
                 title: p.title,
                 excerpt: p.excerpt,
-                category: p.category?.name || "",
+                category: p.category?.[0]?.name || "",
                 readTime: p.readingTime ? `${p.readingTime} دقیقه` : "۵ دقیقه",
                 imageUrl: p.coverImage?.url || "",
                 author: { 

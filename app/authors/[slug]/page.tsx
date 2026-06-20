@@ -4,8 +4,12 @@ import { Footer } from "@/components/blog/footer"
 import { ReadingProgress } from "@/components/blog/reading-progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { Mail, Globe } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+
+// اعتبارسنجی مجدد هر ۶۰ ثانیه (ISR)
+export const revalidate = 60
 
 interface AuthorPageProps {
   params: Promise<{
@@ -25,9 +29,9 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   
   const posts = postsData || []
 
-  // Get unique categories from posts
+  // دسته‌بندی‌های یکتا از روی پست‌ها (category یک آرایه است)
   const categoryNames = posts
-    .map(p => p.category?.name)
+    .flatMap(p => p.category?.map(c => c.name) ?? [])
     .filter((name): name is string => !!name)
   const categories = ["همه", ...Array.from(new Set(categoryNames))]
 
@@ -62,10 +66,40 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                 </div>
               )}
 
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-wrap items-center gap-3">
                 <Button variant="outline" size="sm" asChild>
                   <Link href="/">بازگشت به وبلاگ</Link>
                 </Button>
+
+                {author.email && (
+                  <Button variant="ghost" size="icon" className="h-9 w-9" asChild>
+                    <a href={`mailto:${author.email}`} aria-label="ایمیل">
+                      <Mail className="h-4 w-4" />
+                    </a>
+                  </Button>
+                )}
+
+                {author.socialLinks &&
+                  Object.entries(author.socialLinks).map(([key, url]) =>
+                    url ? (
+                      <Button
+                        key={key}
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9"
+                        asChild
+                      >
+                        <a
+                          href={String(url)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={key}
+                        >
+                          <Globe className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    ) : null
+                  )}
               </div>
             </div>
           </div>
@@ -110,9 +144,9 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                     
                     <div className="p-5">
                       <div className="flex items-center gap-3 text-xs tracking-wide mb-3">
-                        {post.category?.name && (
+                        {post.category?.[0]?.name && (
                           <span className="px-2.5 py-1 bg-secondary text-secondary-foreground rounded-full font-medium">
-                            {post.category.name}
+                            {post.category[0].name}
                           </span>
                         )}
                         <span className="text-muted-foreground">

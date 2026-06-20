@@ -59,10 +59,17 @@ export interface Post {
   tags?: string[];
   coverImage: CoverImage;
   author: Author;
-  category?: Category;
+  // فیلد category در Hygraph یک رابطهٔ چندتایی (لیست) است
+  category?: Category[];
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+}
+
+// شمارش پست‌ها و نویسندگان برتر هر دسته‌بندی (برای صفحهٔ دسته‌بندی‌ها)
+export interface CategoryWithStats extends Category {
+  postCount: number;
+  topAuthors: Author[];
 }
 
 export async function getPosts(): Promise<Post[]> {
@@ -130,6 +137,72 @@ export async function getAllCategories(): Promise<Category[]> {
     ALL_CATEGORIES_QUERY
   );
   return data.categories || [];
+}
+
+// دریافت همهٔ دسته‌بندی‌ها به همراه تعداد پست و نویسندگان برتر هر دسته
+// از آن‌جا که رابطهٔ معکوس Category.posts خالی برمی‌گردد، شمارش را از روی
+// تمام پست‌ها (که آرایهٔ category دارند) محاسبه می‌کنیم.
+export async function getCategoriesWithStats(): Promise<CategoryWithStats[]> {
+  const [categories, posts] = await Promise.all([getAllCategories(), getPosts()]);
+
+  return categories.map((category) => {
+    const categoryPosts = posts.filter((post) =>
+      post.category?.some((c) => c.slug === category.slug)
+    );
+
+    // نویسندگان یکتا در این دسته (حداکثر ۳ نفر برتر بر اساس تعداد مقاله)
+    const authorCount = new Map<string, { author: Author; count: number }>();
+    for (const post of categoryPosts) {
+      if (!post.author) continue;
+      const existing = authorCount.get(post.author.slug);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        authorCount.set(post.author.slug, { author: post.author, count: 1 });
+      }
+    }
+
+    const topAuthors = Array.from(authorCount.values())
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 3)
+      .map((entry) => entry.author);
+
+    return {
+      ...category,
+      postCount: categoryPosts.length,
+      topAuthors,
+    };
+  });
+}
+
+// دریافت نویسندگان برتر یک دسته‌بندی خاص (برای صفحهٔ جزئیات دسته)
+export async function getCategoryTopAuthors(slug: string): Promise<Author[]> {
+  const posts = await getCategoryPosts(slug);
+  const authorCount = new Map<string, { author: Author; count: number }>();
+  for (const post of posts) {
+    if (!post.author) continue;
+    const existing = authorCount.get(post.author.slug);
+    if (existing) {
+      existing.count += 1;
+    } else {
+      authorCount.set(post.author.slug, { author: post.author, count: 1 });
+    }
+  }
+  return Array.from(authorCount.values())
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5)
+    .map((entry) => entry.author);
+}
+
+// شمارش تعداد مقالات هر نویسنده (برای صفحهٔ نویسندگان)
+export async function getAuthorPostCounts(): Promise<Record<string, number>> {
+  const posts = await getPosts();
+  const counts: Record<string, number> = {};
+  for (const post of posts) {
+    if (!post.author) continue;
+    counts[post.author.slug] = (counts[post.author.slug] || 0) + 1;
+  }
+  return counts;
 }
 
 export async function getPostSlugs(): Promise<string[]> {
