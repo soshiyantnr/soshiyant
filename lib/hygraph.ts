@@ -22,7 +22,7 @@ export const hygraphClient = {
       },
       body: JSON.stringify({ query, variables }),
       // اعتبارسنجی مجدد هر ۶۰ ثانیه (ISR) — تغییرات Hygraph به‌مرور اعمال می‌شوند
-      next: { revalidate: 60 },
+      next: { revalidate: 60, tags: ['hygraph'] },
     });
 
     if (!res.ok) {
