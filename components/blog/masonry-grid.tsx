@@ -87,7 +87,7 @@ export function MasonryGrid({ posts, categories }: MasonryGridProps) {
                 excerpt={post.excerpt}
                 category={post.category?.[0]?.name || ""}
                 categorySlug={post.category?.[0]?.slug || ""}
-                readTime={post.readingTime ? `${post.readingTime} دقیقه` : "۵ دقیقه"}
+                readTime={post.readingTime ? `${post.readingTime.toString().replace(/[0-9]/g, (digit) => "۰۱۲۳۴۵۶۷۸۹"[Number(digit)])} دقیقه` : "۵ دقیقه"}
                 author={{
                   name: post.author.name,
                   avatar: post.author.avatar?.url || "",

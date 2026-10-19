@@ -260,7 +260,7 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-vazirmatn, 'Vazirmatn'), 'Tahoma', system-ui, sans-serif;
+  --font-sans: var(--font-article, 'Noto Naskh Arabic'), 'B Nazanin', Georgia, serif;
   --font-serif: var(--font-article, 'Noto Naskh Arabic'), 'B Nazanin', Georgia, serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
@@ -314,6 +314,7 @@
     @apply bg-background text-foreground;
     min-width: 0;
     overflow-x: hidden;
+    font-family: var(--font-article), "Noto Naskh Arabic", "B Nazanin", serif;
     font-variant-numeric: proportional-nums;
   }
 
