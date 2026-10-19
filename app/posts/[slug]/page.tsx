@@ -149,7 +149,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 title: p.title,
                 excerpt: p.excerpt,
                 category: p.category?.[0]?.name || "",
-                readTime: p.readingTime ? `${p.readingTime} دقیقه` : "۵ دقیقه",
+                readTime: p.readingTime ? `${faNumber(p.readingTime)} دقیقه` : "۵ دقیقه",
                 imageUrl: p.coverImage?.url || "",
                 author: { 
                   name: p.author.name, 
