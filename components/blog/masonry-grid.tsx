@@ -43,7 +43,7 @@ export function MasonryGrid({ posts, categories }: MasonryGridProps) {
           viewport={{ once: true }}
           className="mb-10 sm:mb-12 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0"
         >
-          <div className="flex gap-2 sm:gap-3 min-w-max sm:flex-wrap">
+          <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 sm:overflow-visible sm:flex-wrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <button
               onClick={() => setActiveCategory("all")}
               className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${

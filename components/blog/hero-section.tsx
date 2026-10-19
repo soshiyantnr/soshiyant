@@ -10,7 +10,7 @@ export function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-[90vh] flex flex-col items-center justify-center px-4 sm:px-6 py-20 sm:py-24 overflow-hidden">
+    <section className="relative min-h-[max(34rem,90svh)] flex flex-col items-center justify-center px-4 sm:px-6 py-24 sm:py-28 overflow-hidden">
       {/* Persian pattern overlay */}
       <div className="absolute inset-0 persian-pattern pointer-events-none" />
       
@@ -53,7 +53,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.1] tracking-tight text-balance"
+          className="text-[clamp(2rem,8vw,5.5rem)] font-bold leading-[1.15] tracking-tight text-balance"
         >
           <span className="block relative">
             <span className="bg-gradient-to-l from-primary via-primary/80 to-accent bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradient_8s_linear_infinite]">
@@ -89,7 +89,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed text-pretty px-4"
+          className="mt-5 sm:mt-8 text-[clamp(0.95rem,2.5vw,1.25rem)] text-muted-foreground max-w-2xl mx-auto leading-relaxed text-pretty px-2 sm:px-4"
         >
           داستان‌ها و دیدگاه‌هایی که الهام‌بخش ذهن و روح شما هستند.
           در سفری از دانش و خلاقیت همراه ما باشید.
