@@ -7,8 +7,8 @@ import Link from "next/link"
 
 interface AuthorBioProps {
   name: string
-  bio: string
-  avatar: string
+  bio?: string
+  avatar?: string
   initials: string
   slug: string
   social?: {
@@ -48,7 +48,7 @@ export function AuthorBio({ name, bio, avatar, initials, slug, social }: AuthorB
               {name}
             </h4>
           </Link>
-          <p className="mt-2 text-muted-foreground leading-relaxed">{bio}</p>
+          {bio && <p className="mt-2 text-muted-foreground leading-relaxed">{bio}</p>}
           
           <div className="mt-4 flex items-center gap-3">
             {social?.twitter && (

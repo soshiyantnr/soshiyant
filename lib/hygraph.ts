@@ -1,47 +1,42 @@
-// lib/hygraph.ts
-const HYGRAPH_URL = process.env.NEXT_PUBLIC_HYGRAPH_URL!;
-const HYGRAPH_TOKEN = process.env.NEXT_PUBLIC_HYGRAPH_TOKEN!;
+// کلاینت Hygraph با استفاده از fetch بومی Next.js
+// تا قابلیت ISR (revalidate) به‌درستی کار کند.
 
-if (!HYGRAPH_URL || !HYGRAPH_TOKEN) {
-  throw new Error("لطفاً متغیرهای NEXT_PUBLIC_HYGRAPH_URL و NEXT_PUBLIC_HYGRAPH_TOKEN را در Vercel تنظیم کنید.");
+const endpoint = process.env.HYGRAPH_ENDPOINT!;
+const token = process.env.HYGRAPH_TOKEN!;
+
+if (!endpoint) {
+  throw new Error('HYGRAPH_ENDPOINT environment variable is not set');
 }
 
-export async function fetchHygraph<T = any>(
-  query: string,
-  variables: Record<string, any> = {}
-): Promise<T> {
-  try {
-    const response = await fetch(HYGRAPH_URL, {
-      method: "POST",
+if (!token) {
+  throw new Error('HYGRAPH_TOKEN environment variable is not set');
+}
+
+export const hygraphClient = {
+  async query<T>(query: string, variables?: Record<string, any>): Promise<T> {
+    const res = await fetch(endpoint, {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${HYGRAPH_TOKEN}`,
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ 
-        query, 
-        variables 
-      }),
-      next: { 
-        revalidate: 60,
-        tags: ['hygraph']
-      },
+      body: JSON.stringify({ query, variables }),
+      // اعتبارسنجی مجدد هر ۶۰ ثانیه (ISR) — تغییرات Hygraph به‌مرور اعمال می‌شوند
+      next: { revalidate: 60, tags: ['hygraph'] },
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (!res.ok) {
+      throw new Error(`Hygraph request failed: ${res.status} ${res.statusText}`);
     }
 
-    const json = await response.json();
+    const json = await res.json();
 
-    if (json.errors && json.errors.length > 0) {
-      console.error("Hygraph GraphQL Errors:", json.errors);
-      throw new Error(json.errors[0].message || "خطا در دریافت داده از Hygraph");
+    if (json.errors) {
+      throw new Error(
+        `Hygraph GraphQL error: ${json.errors.map((e: any) => e.message).join(', ')}`
+      );
     }
 
     return json.data as T;
-
-  } catch (error) {
-    console.error("Error fetching from Hygraph:", error);
-    throw error;
-  }
-}
+  },
+};

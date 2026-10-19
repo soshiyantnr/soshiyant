@@ -10,7 +10,7 @@ import Link from "next/link"
 
 const navLinks = [
   { href: "/", label: "خانه" },
-  { href: "/categories/technology", label: "دسته‌بندی‌ها" },
+  { href: "/categories", label: "دسته‌بندی‌ها" },
   { href: "/authors", label: "نویسندگان" },
   { href: "/about", label: "درباره ما" },
 ]
