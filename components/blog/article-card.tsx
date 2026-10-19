@@ -60,14 +60,14 @@ export function ArticleCard({
               
               {/* Category pill */}
               <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
-                <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-background/90 backdrop-blur-sm text-foreground rounded-full text-xs font-medium hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer block">
+                <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-background/90 backdrop-blur-sm text-foreground rounded-sm border border-border/60 text-xs font-medium hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer block">
                   {category}
                 </span>
               </div>
 
               {/* Reading time */}
               <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
-                <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-background/90 backdrop-blur-sm text-foreground rounded-full text-xs font-medium flex items-center gap-1.5">
+                <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-background/90 backdrop-blur-sm text-foreground rounded-sm border border-border/60 text-xs font-medium flex items-center gap-1.5">
                   <Clock className="h-3 w-3" />
                   {readTime}
                 </span>

@@ -101,11 +101,19 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="mt-10 sm:mt-12 flex items-center justify-center gap-3 sm:gap-4 flex-wrap"
         >
-          <button className="group relative px-6 sm:px-8 py-3 sm:py-3.5 bg-primary text-primary-foreground rounded-full font-medium text-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-primary/20">
+          <button
+            type="button"
+            onClick={scrollToContent}
+            className="group relative inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-3.5 bg-primary text-primary-foreground rounded-sm border border-primary/70 font-medium text-sm overflow-hidden transition-all duration-300 shadow-[4px_4px_0_color-mix(in_oklab,var(--accent)_65%,transparent)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0_color-mix(in_oklab,var(--accent)_65%,transparent)] active:translate-y-0 active:shadow-[1px_1px_0_color-mix(in_oklab,var(--accent)_65%,transparent)]"
+          >
             <span className="relative z-10">شروع مطالعه</span>
+            <ArrowDown className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-y-1" />
             <div className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           </button>
-          <button className="group px-6 sm:px-8 py-3 sm:py-3.5 border border-border rounded-full font-medium text-sm transition-all duration-300 hover:bg-secondary hover:border-secondary">
+          <button
+            type="button"
+            className="group inline-flex items-center px-3 py-3 sm:py-3.5 text-muted-foreground font-medium text-sm border-b border-border transition-colors duration-300 hover:text-primary hover:border-primary"
+          >
             عضویت در خبرنامه
           </button>
         </motion.div>

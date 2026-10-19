@@ -63,7 +63,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   <Link
                     key={cat.id}
                     href={`/categories/${cat.slug}`}
-                    className="px-3 py-1 bg-primary/10 text-primary rounded-full font-medium hover:bg-primary/20 transition-colors"
+                    className="px-3 py-1 bg-primary/10 text-primary rounded-sm border border-primary/20 font-medium hover:bg-primary/20 transition-colors"
                   >
                     {cat.name}
                   </Link>
