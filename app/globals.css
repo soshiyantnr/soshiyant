@@ -261,7 +261,7 @@
 
 @theme inline {
   --font-sans: var(--font-vazirmatn, 'Vazirmatn'), 'Tahoma', system-ui, sans-serif;
-  --font-serif: var(--font-vazirmatn, 'Vazirmatn'), 'Tahoma', serif;
+  --font-serif: var(--font-article, 'Noto Naskh Arabic'), 'B Nazanin', Georgia, serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -314,6 +314,19 @@
     @apply bg-background text-foreground;
     min-width: 0;
     overflow-x: hidden;
+    font-variant-numeric: proportional-nums;
+  }
+
+  :lang(fa) {
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  .article-body,
+  .article-body p,
+  .article-body li,
+  .article-body blockquote {
+    font-family: var(--font-article), "Noto Naskh Arabic", serif;
+    line-height: 2.15;
   }
 }
 

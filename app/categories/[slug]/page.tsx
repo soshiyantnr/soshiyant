@@ -5,6 +5,7 @@ import { ReadingProgress } from "@/components/blog/reading-progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { faNumber } from "@/lib/format"
 
 // اعتبارسنجی مجدد هر ۶۰ ثانیه (ISR)
 export const revalidate = 60
@@ -70,7 +71,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-border">
               <div>
-                <p className="text-xl sm:text-2xl font-bold">{posts.length.toLocaleString("fa-IR")}</p>
+                <p className="text-xl sm:text-2xl font-bold">{faNumber(posts.length)}</p>
                 <p className="text-xs sm:text-sm text-muted-foreground">مقاله</p>
               </div>
 
@@ -138,7 +139,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
                       </Avatar>
                       <span className="text-xs sm:text-sm font-medium">{featuredPost.author.name}</span>
                       <span className="text-xs sm:text-sm text-muted-foreground">·</span>
-                      <span className="text-xs sm:text-sm text-muted-foreground">{featuredPost.readingTime ? `${featuredPost.readingTime} دقیقه` : "۵ دقیقه"}</span>
+                      <span className="text-xs sm:text-sm text-muted-foreground">{featuredPost.readingTime ? `${faNumber(featuredPost.readingTime)} دقیقه` : "۵ دقیقه"}</span>
                     </div>
                   </div>
                 </div>
@@ -194,7 +195,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
                     
                     <div className="p-4 sm:p-5">
                       <div className="flex items-center gap-2 sm:gap-3 text-xs tracking-wide mb-2 sm:mb-3">
-                        <span className="text-muted-foreground">{post.readingTime ? `${post.readingTime} دقیقه` : "۵ دقیقه"}</span>
+                        <span className="text-muted-foreground">{post.readingTime ? `${faNumber(post.readingTime)} دقیقه` : "۵ دقیقه"}</span>
                       </div>
                       
                       <h4 className="text-base sm:text-lg font-bold leading-tight group-hover:text-primary transition-colors duration-300 line-clamp-2">

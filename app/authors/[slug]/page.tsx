@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Mail, Globe } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { faNumber } from "@/lib/format"
 
 // اعتبارسنجی مجدد هر ۶۰ ثانیه (ISR)
 export const revalidate = 60
@@ -107,12 +108,12 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mt-12 pt-8 border-t border-border">
             <div>
-              <p className="text-3xl font-bold">{posts.length}</p>
+              <p className="text-3xl font-bold">{faNumber(posts.length)}</p>
               <p className="text-sm text-muted-foreground mt-1">مقاله منتشر شده</p>
             </div>
             {author.monthlyReaders && (
               <div>
-                <p className="text-3xl font-bold">{author.monthlyReaders.toLocaleString("fa-IR")}</p>
+                <p className="text-3xl font-bold">{faNumber(author.monthlyReaders.toLocaleString("en-US"))}</p>
                 <p className="text-sm text-muted-foreground mt-1">خواننده ماهانه</p>
               </div>
             )}
@@ -150,7 +151,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                           </span>
                         )}
                         <span className="text-muted-foreground">
-                          {post.readingTime ? `${post.readingTime} دقیقه` : "۵ دقیقه"}
+                          {post.readingTime ? `${faNumber(post.readingTime)} دقیقه` : "۵ دقیقه"}
                         </span>
                       </div>
                       
