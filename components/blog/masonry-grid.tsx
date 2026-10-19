@@ -46,7 +46,7 @@ export function MasonryGrid({ posts, categories }: MasonryGridProps) {
           <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 sm:overflow-visible sm:flex-wrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <button
               onClick={() => setActiveCategory("all")}
-              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${
+              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-sm text-sm font-medium transition-all duration-300 whitespace-nowrap border border-transparent hover:border-primary/30 ${
                 activeCategory === "all"
                   ? "bg-primary text-primary-foreground shadow-md"
                   : "bg-secondary text-secondary-foreground hover:bg-primary/10 hover:text-primary"
@@ -58,7 +58,7 @@ export function MasonryGrid({ posts, categories }: MasonryGridProps) {
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.slug)}
-                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${
+                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-sm text-sm font-medium transition-all duration-300 whitespace-nowrap border border-transparent hover:border-primary/30 ${
                   activeCategory === category.slug
                     ? "bg-primary text-primary-foreground shadow-md"
                     : "bg-secondary text-secondary-foreground hover:bg-primary/10 hover:text-primary"
@@ -120,7 +120,7 @@ export function MasonryGrid({ posts, categories }: MasonryGridProps) {
           viewport={{ once: true }}
           className="mt-12 sm:mt-16 text-center"
         >
-          <button className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 border border-border rounded-full font-medium text-sm transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:border-primary">
+          <button className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 border border-border rounded-sm font-medium text-sm transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:border-primary hover:-translate-y-0.5 shadow-[3px_3px_0_transparent] hover:shadow-[3px_3px_0_color-mix(in_oklab,var(--accent)_65%,transparent)]">
             مشاهده همه مقالات
             <svg 
               className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1 rotate-180" 

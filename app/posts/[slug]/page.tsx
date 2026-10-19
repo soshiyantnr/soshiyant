@@ -63,7 +63,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   <Link
                     key={cat.id}
                     href={`/categories/${cat.slug}`}
-                    className="px-3 py-1 bg-primary/10 text-primary rounded-full font-medium hover:bg-primary/20 transition-colors"
+                    className="px-3 py-1 bg-primary/10 text-primary rounded-sm border border-primary/20 font-medium hover:bg-primary/20 transition-colors"
                   >
                     {cat.name}
                   </Link>
@@ -112,7 +112,7 @@ export default async function PostPage({ params }: PostPageProps) {
         {/* Featured Image */}
         {post.coverImage && (
           <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-10 sm:mb-16">
-            <div className="aspect-[16/9] sm:aspect-[21/9] rounded-xl sm:rounded-2xl overflow-hidden">
+            <div className="aspect-[16/9] sm:aspect-[21/9] rounded-sm overflow-hidden">
               <img
                 src={post.coverImage.url}
                 alt={post.title}

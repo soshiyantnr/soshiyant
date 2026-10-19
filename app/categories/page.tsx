@@ -33,7 +33,7 @@ export default async function CategoriesPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
 
         <div className="max-w-7xl mx-auto relative text-center">
-          <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">
+          <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-sm border border-primary/25 text-sm font-medium mb-6">
             موضوعات
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-balance">
@@ -74,9 +74,9 @@ export default async function CategoriesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category) => (
               <Link key={category.id} href={`/categories/${category.slug}`}>
-                <article className="group relative bg-card border border-border/50 rounded-2xl p-6 h-full flex flex-col transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1">
+                <article className="group relative bg-card border border-border/50 border-t-2 border-t-primary/35 rounded-sm p-6 h-full flex flex-col transition-all duration-500 hover:border-primary/50 hover:shadow-[5px_5px_0_rgba(0,0,0,0.08)] hover:-translate-y-1">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                    <div className="w-12 h-12 rounded-sm border border-primary/20 bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                       <FolderOpen className="h-6 w-6" />
                     </div>
                     <span className="text-sm font-medium text-muted-foreground">
@@ -119,7 +119,7 @@ export default async function CategoriesPage() {
                       <span className="text-xs text-muted-foreground">به‌زودی</span>
                     )}
 
-                    <ArrowLeft className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:-translate-x-1 transition-all duration-300" />
+                    <span className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors"><span>ورود</span><ArrowLeft className="h-3.5 w-3.5 group-hover:-translate-x-1 transition-transform duration-300" /></span>
                   </div>
                 </article>
               </Link>

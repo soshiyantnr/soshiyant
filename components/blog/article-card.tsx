@@ -48,7 +48,7 @@ export function ArticleCard({
       className={`group cursor-pointer ${featured ? "sm:col-span-2 sm:row-span-2" : ""}`}
     >
       <Link href={`/posts/${slug}`}>
-        <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-card border border-border/50 h-full flex flex-col transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-foreground/5">
+        <div className="relative overflow-hidden rounded-sm bg-card border border-border/50 h-full flex flex-col transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-foreground/5">
           {imageUrl && (
             <div className={`relative overflow-hidden ${featured ? "aspect-[16/10]" : "aspect-[4/3]"}`}>
               <motion.img
@@ -60,14 +60,14 @@ export function ArticleCard({
               
               {/* Category pill */}
               <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
-                <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-background/90 backdrop-blur-sm text-foreground rounded-full text-xs font-medium hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer block">
+                <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-background/90 backdrop-blur-sm text-foreground rounded-sm border border-border/60 text-xs font-medium hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer block">
                   {category}
                 </span>
               </div>
 
               {/* Reading time */}
               <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
-                <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-background/90 backdrop-blur-sm text-foreground rounded-full text-xs font-medium flex items-center gap-1.5">
+                <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-background/90 backdrop-blur-sm text-foreground rounded-sm border border-border/60 text-xs font-medium flex items-center gap-1.5">
                   <Clock className="h-3 w-3" />
                   {readTime}
                 </span>

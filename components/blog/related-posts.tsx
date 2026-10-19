@@ -45,7 +45,7 @@ export function RelatedPosts({ posts }: RelatedPostsProps) {
             className="group"
           >
             <Link href={`/posts/${post.slug}`} className="block">
-              <div className="relative overflow-hidden rounded-xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-foreground/5 transition-all duration-500">
+              <div className="relative overflow-hidden rounded-sm bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-foreground/5 transition-all duration-500">
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
                     src={post.imageUrl}
