@@ -30,7 +30,7 @@
   --border: oklch(0.88 0.015 180);
   --input: oklch(0.88 0.015 180);
   --ring: oklch(0.50 0.12 180);
-  --radius: 0.625rem;
+  --radius: 0.3rem;
   --pattern-opacity: 0.03;
 }
 

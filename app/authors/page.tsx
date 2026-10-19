@@ -96,7 +96,7 @@ export default async function AuthorsPage() {
               const bio = stripHtml(author.bio?.html)
               return (
                 <Link key={author.id} href={`/authors/${author.slug}`}>
-                  <article className="group relative bg-card border border-border/50 rounded-2xl p-6 h-full transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1">
+                  <article className="group relative bg-card border border-border/50 rounded-sm p-6 h-full transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1">
                     <div className="flex flex-col items-center text-center h-full">
                       <div className="relative mb-4">
                         <Avatar className="h-24 w-24 ring-4 ring-background group-hover:ring-primary/20 transition-all duration-300">
@@ -152,7 +152,7 @@ export default async function AuthorsPage() {
             {Array.from({ length: placeholderCount }).map((_, index) => (
               <div
                 key={`placeholder-${index}`}
-                className="relative bg-card/50 border border-dashed border-border/60 rounded-2xl p-6 h-full"
+                className="relative bg-card/50 border border-dashed border-border/60 rounded-sm p-6 h-full"
                 aria-hidden="true"
               >
                 <div className="flex flex-col items-center text-center h-full">

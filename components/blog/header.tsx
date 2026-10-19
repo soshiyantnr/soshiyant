@@ -111,7 +111,7 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-foreground hover:text-accent hover:bg-secondary/50 transition-colors py-3 px-4 rounded-lg text-base"
+                className="text-foreground hover:text-accent hover:bg-secondary/50 transition-colors py-3 px-4 rounded-sm text-base border-r-2 border-transparent hover:border-accent"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.label}

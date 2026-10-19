@@ -110,7 +110,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
           {featuredPost && (
             <article className="group mb-10 sm:mb-12">
               <Link href={`/posts/${featuredPost.slug}`} className="block">
-                <div className="grid md:grid-cols-2 gap-4 sm:gap-6 bg-card border border-border/50 rounded-xl sm:rounded-2xl overflow-hidden hover:border-primary/30 hover:shadow-xl hover:shadow-foreground/5 transition-all duration-500">
+                <div className="grid md:grid-cols-2 gap-4 sm:gap-6 bg-card border border-border/50 rounded-sm overflow-hidden hover:border-primary/30 hover:shadow-xl hover:shadow-foreground/5 transition-all duration-500">
                   {featuredPost.coverImage && (
                     <div className="aspect-[16/10] md:aspect-auto overflow-hidden">
                       <img
@@ -182,7 +182,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
             {otherPosts.map((post, index) => (
               <article key={post.id} className="group">
                 <Link href={`/posts/${post.slug}`} className="block">
-                  <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-foreground/5 transition-all duration-500">
+                  <div className="relative overflow-hidden rounded-sm bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-foreground/5 transition-all duration-500">
                     {post.coverImage && (
                       <div className="aspect-[4/3] overflow-hidden">
                         <img

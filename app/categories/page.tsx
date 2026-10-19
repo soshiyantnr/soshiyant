@@ -74,7 +74,7 @@ export default async function CategoriesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category) => (
               <Link key={category.id} href={`/categories/${category.slug}`}>
-                <article className="group relative bg-card border border-border/50 rounded-2xl p-6 h-full flex flex-col transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1">
+                <article className="group relative bg-card border border-border/50 rounded-sm p-6 h-full flex flex-col transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1">
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                       <FolderOpen className="h-6 w-6" />

@@ -58,7 +58,7 @@ export function SortBar({ options, activeSort, onSortChange }: SortBarProps) {
       <select
         value={activeSort}
         onChange={(e) => onSortChange(e.target.value)}
-        className="bg-secondary text-secondary-foreground text-sm rounded-lg px-3 py-1.5 border-none outline-none cursor-pointer"
+        className="bg-secondary text-secondary-foreground text-sm rounded-sm px-3 py-1.5 border-none outline-none cursor-pointer"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

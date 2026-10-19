@@ -48,7 +48,7 @@ export function ArticleCard({
       className={`group cursor-pointer ${featured ? "sm:col-span-2 sm:row-span-2" : ""}`}
     >
       <Link href={`/posts/${slug}`}>
-        <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-card border border-border/50 h-full flex flex-col transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-foreground/5">
+        <div className="relative overflow-hidden rounded-sm bg-card border border-border/50 h-full flex flex-col transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-foreground/5">
           {imageUrl && (
             <div className={`relative overflow-hidden ${featured ? "aspect-[16/10]" : "aspect-[4/3]"}`}>
               <motion.img
