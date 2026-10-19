@@ -16,6 +16,9 @@ const notoNaskhArabic = Noto_Naskh_Arabic({
   display: "swap",
 })
 
+// Hygraph environment variables are provided at request time in Vercel deployments.
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: 'نوشتار — تجربه‌ای نوین در وبلاگ‌نویسی',
   description: 'مقالات عمیق، ایده‌های نوآورانه و داستان‌هایی که الهام‌بخش و آگاهی‌دهنده هستند.',
