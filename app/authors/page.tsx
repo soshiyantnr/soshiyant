@@ -4,6 +4,7 @@ import { Footer } from "@/components/blog/footer"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { BookOpen, Users, TrendingUp, UserPlus } from "lucide-react"
 import Link from "next/link"
+import { faNumber } from "@/lib/format"
 
 // اعتبارسنجی مجدد هر ۶۰ ثانیه (ISR)
 export const revalidate = 60
@@ -66,7 +67,7 @@ export default async function AuthorsPage() {
           {/* Stats */}
           <div className="mt-12 flex items-center justify-center gap-8 sm:gap-16">
             {[
-              { icon: Users, value: authors.length.toLocaleString("fa-IR"), label: "نویسنده فعال" },
+              { icon: Users, value: faNumber(authors.length), label: "نویسنده فعال" },
               { icon: BookOpen, value: totalArticles.toLocaleString("fa-IR"), label: "مقاله منتشر شده" },
               {
                 icon: TrendingUp,

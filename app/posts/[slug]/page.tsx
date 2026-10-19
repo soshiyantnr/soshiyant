@@ -1,4 +1,4 @@
-import { getPostBySlug, getRelatedPosts } from "@/lib/hygraph-api"
+import { getPostBySlug, getRelatedPosts, type Post } from "@/lib/hygraph-api"
 import { Header } from "@/components/blog/header"
 import { Footer } from "@/components/blog/footer"
 import { ReadingProgress } from "@/components/blog/reading-progress"
@@ -7,6 +7,7 @@ import { RelatedPosts } from "@/components/blog/related-posts"
 import { PostContent } from "@/components/blog/post-content"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ArrowRight, Calendar, Clock, Share2 } from "lucide-react"
+import { faDate, faNumber } from "@/lib/format"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { notFound } from "next/navigation"
@@ -28,13 +29,13 @@ export default async function PostPage({ params }: PostPageProps) {
   
   // دستهٔ اصلی پست (اولین دسته) برای یافتن مقالات مرتبط
   const primaryCategory = post.category?.[0]
-  let relatedPosts = []
+  let relatedPosts: Post[] = []
   if (primaryCategory?.id) {
     const related = await getRelatedPosts(primaryCategory.id, post.id)
     relatedPosts = related
   }
 
-  const formattedDate = new Date(post.publishedAt).toLocaleDateString("fa-IR", {
+  const formattedDate = faDate(post.publishedAt, {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -73,7 +74,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 </span>
                 <span className="flex items-center gap-1.5 text-muted-foreground">
                   <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  {post.readingTime ? `${post.readingTime} دقیقه` : "۵ دقیقه"}
+                  {post.readingTime ? `${faNumber(post.readingTime)} دقیقه` : "۵ دقیقه"}
                 </span>
               </div>
 

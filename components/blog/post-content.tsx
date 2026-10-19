@@ -12,7 +12,7 @@ export function PostContent({ children }: PostContentProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.2 }}
-      className="prose prose-lg max-w-none
+      className="article-body prose prose-lg max-w-none
         prose-headings:font-bold prose-headings:tracking-tight
         prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
         prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3

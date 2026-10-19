@@ -1,13 +1,19 @@
 import type { Metadata } from 'next'
-import { Vazirmatn } from 'next/font/google'
+import { Noto_Naskh_Arabic, Vazirmatn } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 
-const vazirmatn = Vazirmatn({ 
+const vazirmatn = Vazirmatn({
   subsets: ["arabic"],
-  variable: '--font-vazirmatn',
-  display: 'swap',
+  variable: "--font-vazirmatn",
+  display: "swap",
+})
+
+const notoNaskhArabic = Noto_Naskh_Arabic({
+  subsets: ["arabic"],
+  variable: "--font-article",
+  display: "swap",
 })
 
 export const metadata: Metadata = {
@@ -40,7 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl" suppressHydrationWarning>
-      <body className={`${vazirmatn.variable} font-sans antialiased`}>
+      <body className={`${vazirmatn.variable} ${notoNaskhArabic.variable} font-sans antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
